@@ -138,8 +138,12 @@ export function WorkRoutine() {
                         allowManualFinish
                         onComplete={() => handleFinish(currentBlock, blockDuration)}
                         onManualFinish={(elapsed) => handleFinish(currentBlock, Math.ceil(elapsed / 60))}
+                        persistenceId="work-block-timer"
                     />
-                    <button onClick={() => setCurrentBlock('')} className="text-xs text-red-400 mt-4 hover:underline">Cancelar Bloco</button>
+                    <button onClick={() => {
+                        setCurrentBlock('');
+                        localStorage.removeItem('timer-work-block-timer');
+                    }} className="text-xs text-red-400 mt-4 hover:underline">Cancelar Bloco</button>
                 </div>
             )}
         </GlassCard>

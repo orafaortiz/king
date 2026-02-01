@@ -10,6 +10,7 @@ export function PhysicalRoutine() {
     { id: 'squats', name: 'Agachamentos', reps: 0 },
     { id: 'core', name: 'Core (min)', reps: 0 }
   ]);
+  const [customDuration, setCustomDuration] = useState(45);
   const [isSaved, setIsSaved] = useState(false);
 
   // Load from DB
@@ -77,11 +78,31 @@ export function PhysicalRoutine() {
       </header>
 
       <GlassCard className="mb-6">
-        <h2 className="text-sm font-heading text-white mb-2">Duração do Treino</h2>
+        <div className="flex items-center justify-between mb-4">
+            <h2 className="text-sm font-heading text-white">Duração do Treino</h2>
+            <div className="flex gap-2">
+                {[30, 45, 60, 90].map(min => (
+                    <button
+                        key={min}
+                        onClick={() => setCustomDuration(min)}
+                        className={`px-3 py-1 rounded-full text-xs font-bold transition-all border ${
+                            customDuration === min 
+                                ? "bg-primary text-black border-primary" 
+                                : "bg-zinc-900 text-zinc-500 border-zinc-800 hover:border-zinc-700"
+                        }`}
+                    >
+                        {min}m
+                    </button>
+                ))}
+            </div>
+        </div>
+
         <Timer 
-            initialMinutes={45} 
+            key={customDuration}
+            initialMinutes={customDuration} 
             allowManualFinish
             label="Tempo de Sessão"
+            persistenceId="physical-workout-timer"
             onComplete={() => alert("Tempo limite de treino atingido.")}
             onManualFinish={async (elapsed) => {
                 const date = new Date().toISOString().split('T')[0];

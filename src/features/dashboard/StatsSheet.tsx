@@ -94,11 +94,11 @@ export function StatsSheet({ isOpen, onClose }: StatsSheetProps) {
                 {view === 'month' && (
                     <div className="grid grid-cols-7 gap-2">
                         {Array.from({ length: 30 }).map((_, i) => {
-                             // Mock calendar visualization for premium feel
-                             const opacity = Math.random() > 0.5 ? 1 : 0.2;
-                             return (
-                                 <div key={i} className={cn("aspect-square rounded-md bg-primary", `opacity-[${opacity}]`)} style={{ opacity }} />
-                             )
+                            // Mock calendar visualization for premium feel
+                            const opacity = (i * 7 + 3) % 10 > 5 ? 1 : 0.2;
+                            return (
+                                <div key={i} className={cn("aspect-square rounded-md bg-primary")} style={{ opacity }} />
+                            )
                         })}
                         <p className="col-span-7 text-center text-xs text-zinc-500 mt-4">Visualização de consistência (mês atual)</p>
                     </div>

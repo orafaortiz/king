@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils/cn';
 
 export function SpiritualRoutine() {
   const [completedItems, setCompletedItems] = useState<string[]>([]);
+  const [customDuration, setCustomDuration] = useState(30);
   const checklist = [
     { id: 'bible', label: 'Leitura Bíblica' },
     { id: 'prayer', label: 'Oração (Agradecimento e Direção)' },
@@ -31,6 +32,7 @@ export function SpiritualRoutine() {
   const handleCheck = async (id: string) => {
     const isChecked = completedItems.includes(id);
     const date = new Date().toISOString().split('T')[0];
+    const timestamp = new Date().getTime(); // Capture time at start of action
 
     if (isChecked) {
         // Uncheck: Remove from UI and delete from DB
@@ -49,9 +51,38 @@ export function SpiritualRoutine() {
             subtype: id,
             value: 'completed',
             completed: true,
-            timestamp: Date.now()
+            timestamp
         });
     }
+  };
+
+  const handleTimerComplete = async () => {
+    const date = new Date().toISOString().split('T')[0];
+    const timestamp = Date.now();
+    await db.dailyLogs.add({
+        date,
+        type: 'spiritual',
+        subtype: 'timer_session',
+        value: customDuration.toString(), // minutes
+        completed: true,
+        timestamp
+    });
+    alert("Tempo espiritual concluído. O espírito foi alimentado.");
+  };
+
+  const handleManualFinish = async (elapsedSeconds: number) => {
+    const date = new Date().toISOString().split('T')[0];
+    const minutes = Math.ceil(elapsedSeconds / 60);
+    const timestamp = Date.now();
+    await db.dailyLogs.add({
+        date,
+        type: 'spiritual',
+        subtype: 'timer_session_partial',
+        value: minutes.toString(),
+        completed: true,
+        timestamp
+    });
+    alert(`Sessão salva: ${minutes} minutos.`);
   };
 
   return (
@@ -61,36 +92,34 @@ export function SpiritualRoutine() {
         <p className="text-zinc-400 text-sm italic">"Hoje não ajo por mim. Ajo em alinhamento."</p>
       </header>
 
-      <Timer 
-        initialMinutes={30} 
-        label="Alimento Espiritual" 
-        allowManualFinish
-        onComplete={async () => {
-          const date = new Date().toISOString().split('T')[0];
-          await db.dailyLogs.add({
-            date,
-            type: 'spiritual',
-            subtype: 'timer_session',
-            value: '30', // minutes
-            completed: true,
-            timestamp: Date.now()
-          });
-          alert("Tempo espiritual concluído. O espírito foi alimentado.");
-        }}
-        onManualFinish={async (elapsedSeconds) => {
-            const date = new Date().toISOString().split('T')[0];
-            const minutes = Math.ceil(elapsedSeconds / 60);
-            await db.dailyLogs.add({
-              date,
-              type: 'spiritual',
-              subtype: 'timer_session_partial',
-              value: minutes.toString(),
-              completed: true,
-              timestamp: Date.now()
-            });
-            alert(`Sessão salva: ${minutes} minutos.`);
-        }}
-      />
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-center gap-2">
+            {[15, 30, 60].map(min => (
+                <button
+                    key={min}
+                    onClick={() => setCustomDuration(min)}
+                    className={cn(
+                        "px-3 py-1 rounded-full text-xs font-bold transition-all border",
+                        customDuration === min 
+                            ? "bg-primary text-black border-primary" 
+                            : "bg-zinc-900 text-zinc-500 border-zinc-800 hover:border-zinc-700"
+                    )}
+                >
+                    {min}m
+                </button>
+            ))}
+        </div>
+
+        <Timer 
+            key={customDuration} // Re-init timer if duration changes
+            initialMinutes={customDuration} 
+            label="Alimento Espiritual" 
+            allowManualFinish
+            persistenceId="spiritual-timer"
+            onComplete={handleTimerComplete}
+            onManualFinish={handleManualFinish}
+        />
+      </div>
 
       <h2 className="text-xl font-heading mt-8 mb-4">Checklist Diário</h2>
       <div className="space-y-3">
