@@ -64,7 +64,7 @@ export function Dashboard() {
       <header className="space-y-2">
         <div className="flex items-center justify-between">
             <h1 className="text-3xl font-heading font-bold text-primary flex items-center gap-2">
-                <Crown size={28} /> Rei Rafael
+                <Crown size={28} /> Ritual do REI
             </h1>
             <div className="flex items-center gap-2">
                 <span className="text-zinc-500 text-xs font-mono">{today}</span>
