@@ -7,17 +7,20 @@ import { Crown, Sparkles, BarChart2 } from 'lucide-react';
 import { getKingsVoiceMessage, type Quote } from '@/lib/ai/kingsVoice';
 
 export function Dashboard() {
-  const [decree, setDecree] = useState('');
-  const [isEditingDecree, setIsEditingDecree] = useState(false);
-  const [message, setMessage] = useState<Quote | null>(null);
+  const [decree, setDecree] = useState(() => {
+    const today = new Date().toISOString().split('T')[0];
+    return localStorage.getItem(`decree-${today}`) || '';
+  });
 
-  // Load decree from localStorage for now (or DB if we add a table)
-  useEffect(() => {
+  const [isEditingDecree, setIsEditingDecree] = useState(() => {
     const today = new Date().toISOString().split('T')[0];
     const saved = localStorage.getItem(`decree-${today}`);
-    if (saved) setDecree(saved);
-    else setIsEditingDecree(true);
+    return !saved;
+  });
 
+  const [message, setMessage] = useState<Quote | null>(null);
+
+  useEffect(() => {
     getKingsVoiceMessage().then(setMessage);
   }, []);
 
