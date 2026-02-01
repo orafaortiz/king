@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #09090B;
+  --color-surface: #18181B;
+  --color-primary: #D4AF37;
+  --color-secondary: #3F3F46;
+
+  --font-heading: Outfit, sans-serif;
+  --font-body: Inter, sans-serif;
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-surface/50 backdrop-blur-md border border-white/5;
+  }
+  .glass-card {
+    @apply bg-surface/80 backdrop-blur-xl border border-white/10 shadow-xl rounded-2xl;
+  }
+}
+
+body {
+  @apply bg-background text-zinc-100 font-body antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-heading tracking-tight;
+}
