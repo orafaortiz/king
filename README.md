@@ -1,73 +1,80 @@
-# React + TypeScript + Vite
+# Ritual Rei Jeová - Sovereign Glass PWA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> *"Rule your mind or it will rule you."* - Horace
 
-Currently, two official plugins are available:
+This is a personal, **offline-first PWA (Progressive Web App)** designed to manage the **King's Ritual**: a high-performance daily routine focused on Spirituality, Physique, and Kingdom Building (Work).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 👑 Overview
 
-## React Compiler
+The app was designed with the **"Sovereign Glass"** aesthetic: a premium, dark design with glassmorphism effects and fluid animations, evoking sobriety and focus.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Key Features
 
-## Expanding the ESLint configuration
+*   **Daily Rituals**:
+    *   **Spiritual**: 30min Timer with checklist and execution logs.
+    *   **Physical**: Workout Logger (Pushups, Squats, Core) with session timer.
+    *   **Kingdom (Work)**: Deep Work Blocks and "Client Demands" management.
+    *   **Night**: Day review and emotional delivery.
+*   **Smart Timers**:
+    *   Support for manual save (early finish).
+    *   "Free Mode" to add extra focus blocks.
+*   **Statistics (Dashboard)**:
+    *   Daily progress visualization (Performance Ring).
+    *   Detailed history of completed activities.
+*   **The King's Voice (Local AI)**:
+    *   Contextual messaging system (Stoic/Biblical) based on time of day and progress.
+*   **Offline-First**:
+    *   All data saved locally via **Dexie.js** (IndexedDB) and `localStorage`.
+    *   Works without internet.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠 Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+*   **Core**: React 19 + Vite 6
+*   **Language**: TypeScript
+*   **Styling**: Tailwind CSS 4 + Framer Motion (Animations)
+*   **Database**: Dexie.js (IndexedDB Wrapper)
+*   **PWA**: vite-plugin-pwa (Service Workers)
+*   **Icons**: Lucide React
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 How to Use
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Local Installation
+
+1.  Clone the repository.
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Run the development server:
+    ```bash
+    npm run dev
+    ```
+4.  Access `http://localhost:5173`.
+
+### Mobile Access (Local)
+
+To test on mobile via Wi-Fi:
+1.  Ensure you are on the same Wi-Fi network.
+2.  Run with the host flag:
+    ```bash
+    npm run dev -- --host
+    ```
+3.  Access the IP shown in the terminal (e.g., `192.168.1.XX:5173`).
+
+### Production Build
+
+To generate the optimized version (which works 100% offline):
+```bash
+npm run build
 ```
+Files will be in the `dist` folder.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📱 PWA Installation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1.  Open the app in your browser (Chrome/Safari).
+2.  In the menu, select **"Add to Home Screen"**.
+3.  The app will be installed as a native application on your device.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+*"The sluggard craves and gets nothing, but the desires of the diligent are fully satisfied."* - Proverbs 13:4
