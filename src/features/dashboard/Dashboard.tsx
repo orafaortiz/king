@@ -84,31 +84,54 @@ export function Dashboard() {
       
       {/* Decree Section */}
       <section>
-        <GlassCard className="relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Sparkles size={100} />
+        <GlassCard className="relative overflow-hidden group border-primary/20 bg-gradient-to-br from-zinc-900/80 to-zinc-900/40">
+            <div className="absolute -top-10 -right-10 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-primary">
+                <Sparkles size={180} />
             </div>
             
-            <h2 className="text-zinc-400 text-xs uppercase tracking-widest mb-2">Decreto do Dia</h2>
-            
-            {isEditingDecree ? (
-                <div className="flex flex-col gap-2">
-                    <textarea 
-                        autoFocus
-                        value={decree}
-                        onChange={(e) => setDecree(e.target.value)}
-                        placeholder="Defina sua intenção: 1 Espiritual, 1 Produto, 1 Coragem..."
-                        className="w-full bg-zinc-900/50 border border-zinc-700 rounded-lg p-3 text-white focus:border-primary focus:outline-none h-24"
-                    />
-                    <button onClick={saveDecree} className="self-end bg-primary text-black px-4 py-2 rounded-lg text-sm font-bold">
-                        Selar Decreto
-                    </button>
-                </div>
-            ) : (
-                <div onClick={() => setIsEditingDecree(true)} className="cursor-pointer">
-                    <p className="text-xl font-heading font-medium text-white italic">"{decree || 'Toque para definir...'}"</p>
-                </div>
-            )}
+            <div className="relative z-10">
+              <h2 className="text-primary font-heading text-sm uppercase tracking-widest mb-1 shadow-primary/20 drop-shadow-sm flex items-center gap-2">
+                <Crown size={14} /> Decreto do Dia
+              </h2>
+              
+              <p className="text-zinc-400 text-xs mb-4 max-w-md leading-relaxed">
+                Declare sua intenção única para hoje. Defina uma meta clara (Espiritual, Produto ou Coragem) que guiará suas ações. "A palavra do Rei não volta vazia."
+              </p>
+              
+              {isEditingDecree ? (
+                  <div className="flex flex-col gap-3">
+                      <div className="relative">
+                        <textarea 
+                            autoFocus
+                            value={decree}
+                            onChange={(e) => setDecree(e.target.value)}
+                            placeholder="Escreva seu decreto aqui..."
+                            className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-lg text-white font-medium placeholder:text-zinc-600 focus:border-primary/50 focus:ring-1 focus:ring-primary/50 focus:outline-none min-h-[120px] resize-none transition-all"
+                        />
+                        <div className="absolute bottom-3 right-3">
+                          <span className={`${decree.length > 0 ? 'text-primary' : 'text-zinc-700'} text-xs transition-colors`}>
+                            {decree.length} chars
+                          </span>
+                        </div>
+                      </div>
+                      <button 
+                        onClick={saveDecree} 
+                        className="self-end bg-primary hover:bg-primary/90 text-black px-6 py-2.5 rounded-lg text-sm font-bold tracking-wide transition-all transform active:scale-95 shadow-lg shadow-primary/20"
+                      >
+                          Selar Decreto
+                      </button>
+                  </div>
+              ) : (
+                  <div onClick={() => setIsEditingDecree(true)} className="cursor-pointer group/text relative p-2 -ml-2 rounded-lg hover:bg-white/5 transition-colors">
+                      <p className="text-2xl font-heading font-medium text-white italic leading-relaxed">
+                        "{decree || 'Toque para definir o comando do seu dia...'}"
+                      </p>
+                      <span className="text-xs text-zinc-500 mt-2 block opacity-0 group-hover/text:opacity-100 transition-opacity">
+                        Toque para editar
+                      </span>
+                  </div>
+              )}
+            </div>
         </GlassCard>
       </section>
 
